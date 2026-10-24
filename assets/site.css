@@ -315,6 +315,13 @@ p{margin:0 0 .8rem}
 .pd-why{margin:.9rem 0 0;line-height:1.8}
 .amz-note{font-size:.85rem;color:var(--muted);margin:.6rem 0}
 .partner-mail{font-size:1.25rem;font-weight:800;user-select:all;text-align:start}
+.mkt select{background:transparent;color:inherit;border:1px solid var(--ink-rule);border-radius:4px;font:inherit;font-size:.85rem;padding:.15rem .35rem;margin-inline-start:.5rem}
+.mkt option{color:#0E0F13}
+.mkt-note{margin:.75rem 0 0;padding:.5rem .75rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--rule);font-size:.88rem}
+.trend{margin:0;padding-inline-start:1.3rem;display:grid;gap:.9rem}
+.trend p{margin:.25rem 0 0}
+.trend-acts{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem}
+.install{margin-top:.5rem}
 .pd-alt{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .7rem;margin:.9rem 0 0;font-size:.92rem}
 .sugg{border:2px dashed var(--rule-2);border-radius:var(--r);padding:.75rem 1rem .9rem;margin:1.1rem 0 0;background:var(--surface)}
 .sugg h3,.sugg h4{margin:.15rem 0 .4rem}
