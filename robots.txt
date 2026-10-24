@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 Disallow: /go/
+Disallow: /partners/yestahel-boutiqaat.pdf
+Disallow: /partners/yestahel-danube.pdf
+Disallow: /partners/yestahel-lulu.pdf
+Disallow: /partners/yestahel-ninja.pdf
+Disallow: /partners/yestahel-ounass.pdf
+Disallow: /partners/yestahel-sharafdg.pdf
 Sitemap: https://yestahel.net/sitemap.xml
