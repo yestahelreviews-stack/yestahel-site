@@ -312,6 +312,7 @@ p{margin:0 0 .8rem}
 @media (min-width:640px){.pd-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem}}
 .pd-body>:only-child{grid-column:1/-1}
 .pd-why{margin:.9rem 0 0;line-height:1.8}
+.amz-note{font-size:.85rem;color:var(--muted);margin:.6rem 0}
 .pd-alt{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .7rem;margin:.9rem 0 0;font-size:.92rem}
 .sugg{border:2px dashed var(--rule-2);border-radius:var(--r);padding:.75rem 1rem .9rem;margin:1.1rem 0 0;background:var(--surface)}
 .sugg h3,.sugg h4{margin:.15rem 0 .4rem}
@@ -350,6 +351,17 @@ p{margin:0 0 .8rem}
 .method{margin-top:2.25rem}
 .method h3{font-size:.95rem;margin-top:1rem}
 .sources{margin:0 0 .8rem;padding-inline-start:1.2rem;font-size:.92rem}
+.glist{margin:.8rem 0 0;padding-inline-start:1.3rem;line-height:1.9}
+.glist a{color:inherit}
+.glinks{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.glinks a{font-weight:800}
+.specs{margin:0}
+.specs div{display:grid;grid-template-columns:minmax(6rem,40%) minmax(0,1fr);gap:.8rem;padding:.4rem 0;border-top:1px solid var(--rule)}
+.specs div:first-child{border-top:0}
+.specs dt{color:var(--muted);font-size:.9rem}
+.specs dd{margin:0;font-weight:700}
+.faq h3{font-size:1.02rem;margin:1.1rem 0 .3rem}
+.faq p{margin:0}
 .sources li{margin:.25rem 0}
 .disclosure{margin:2rem 0 0;padding:.7rem .9rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--rule);font-size:.88rem}
 .prose h1{margin-top:.25rem}
