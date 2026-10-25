@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=amqjp2">
+<link rel="stylesheet" href="/assets/site.css?v=h1b4hl">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://yestahel.net/electronics-office/#page","name":"إلكترونيات ومكتب","inLanguage":"ar","url":"https://yestahel.net/electronics-office/","publisher":{"@id":"https://yestahel.net/#org"}},{"@type":"Organization","@id":"https://yestahel.net/#org","name":"يستاهل؟","alternateName":"Yestahel","url":"https://yestahel.net/","logo":"https://yestahel.net/assets/icon.svg","sameAs":["https://www.youtube.com/@yestahel_sa"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://yestahel.net/"},{"@type":"ListItem","position":2,"name":"إلكترونيات ومكتب"}]}]}</script>
 </head>
 <body>
@@ -493,11 +493,17 @@
       note.textContent = `${missing ? `${missing === links ? 'منتجات هالصفحة' : 'بعض منتجات هالصفحة'} ما لقيناها في متاجر ${cfg.markets[m]}، فروابطها للمتاجر السعودية. ` : ''}الأسعار المعروضة بالريال من المتاجر السعودية.`;
     }
   };
-  const sel = document.getElementById('mkt');
-  if (sel) {
+  // #mkt in the header, plus any select[data-mkt] (the new design's mobile header has its own).
+  const sels = [...document.querySelectorAll('select#mkt, select[data-mkt]')];
+  for (const sel of sels) {
     sel.value = market;
     sel.hidden = false;
-    sel.addEventListener('change', () => { market = sel.value; try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ } apply(market); });
+    sel.addEventListener('change', () => {
+      market = sel.value;
+      for (const other of sels) other.value = market;
+      try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ }
+      apply(market);
+    });
   }
   apply(market);
   // «ثبّت يستاهل على جوالك» appears only where the browser offers installing. iPhone and iPad

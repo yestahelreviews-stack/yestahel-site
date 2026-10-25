@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=amqjp2">
+<link rel="stylesheet" href="/assets/site.css?v=h1b4hl">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/#article","headline":"دراجة تمارين ديكاتلون EB 140 ولا EB 520 B؟ مرتين بالأسبوع ولا كل يوم","description":"قارنّا دراجة تمارين ديكاتلون EB 140 وEB 520 B بمقاومة موتور. قرأنا مواصفات ديكاتلون وحوالي ألف تقييم منشور للدراجتين، وطلعنا بحكم حسب كم مرة تتمرّن.","inLanguage":"ar","datePublished":"2026-10-25","dateModified":"2026-10-25","author":[{"@type":"Person","name":"راشد"},{"@type":"Person","name":"آلاء"}],"publisher":{"@id":"https://yestahel.net/#org"},"mainEntityOfPage":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/","articleSection":"الرياضة واللياقة","about":[{"@id":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/#pd-cheap"},{"@id":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/#pd-alt"}],"image":"https://yestahel.net/assets/photos/web/products/157-cheap-1.jpg"},{"@type":"Organization","@id":"https://yestahel.net/#org","name":"يستاهل؟","alternateName":"Yestahel","url":"https://yestahel.net/","logo":"https://yestahel.net/assets/icon.svg","sameAs":["https://www.youtube.com/@yestahel_sa"]},{"@type":"Product","@id":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/#pd-cheap","name":"دولاب 6 كجم، 15 مستوى، 7 برامج، 24.5 كجم (Decathlon Domyos EB 140)","category":"الرياضة واللياقة","brand":{"@type":"Brand","name":"Decathlon Domyos EB 140"},"image":"https://yestahel.net/assets/photos/web/products/157-cheap-1.jpg","offers":{"@type":"AggregateOffer","priceCurrency":"SAR","lowPrice":1590,"highPrice":1590,"offerCount":1,"offers":[{"@type":"Offer","price":1590,"priceCurrency":"SAR","url":"https://decathlon.com.sa/products/basic-exercise-bike-eb-140","seller":{"@type":"Organization","name":"ديكاتلون السعودية"}}]}},{"@type":"Product","@id":"https://yestahel.net/review/decathlon-exercise-bike-eb140-vs-eb520b/#pd-alt","name":"مقاومة بموتور 15 مستوى، 12 برنامج، بلوتوث وتطبيق، بدون كهرب (Decathlon Domyos EB520 B)","category":"الرياضة واللياقة","brand":{"@type":"Brand","name":"Decathlon Domyos EB520 B"},"image":"https://yestahel.net/assets/photos/web/products/157-alt-1.jpg","offers":{"@type":"AggregateOffer","priceCurrency":"SAR","lowPrice":2900,"highPrice":2900,"offerCount":1,"offers":[{"@type":"Offer","price":2900,"priceCurrency":"SAR","url":"https://decathlon.com.sa/products/exercise-bike-with-motorised-resistance-eb520-b-with-decathlon-warranty","seller":{"@type":"Organization","name":"ديكاتلون السعودية"}}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://yestahel.net/"},{"@type":"ListItem","position":2,"name":"الرياضة واللياقة","item":"https://yestahel.net/sports-fitness/"},{"@type":"ListItem","position":3,"name":"دراجة تمارين ديكاتلون EB 140 ولا EB 520 B؟ مرتين بالأسبوع ولا كل يوم"}]}]}</script>
 </head>
 <body>
@@ -294,11 +294,17 @@
       note.textContent = `${missing ? `${missing === links ? 'منتجات هالصفحة' : 'بعض منتجات هالصفحة'} ما لقيناها في متاجر ${cfg.markets[m]}، فروابطها للمتاجر السعودية. ` : ''}الأسعار المعروضة بالريال من المتاجر السعودية.`;
     }
   };
-  const sel = document.getElementById('mkt');
-  if (sel) {
+  // #mkt in the header, plus any select[data-mkt] (the new design's mobile header has its own).
+  const sels = [...document.querySelectorAll('select#mkt, select[data-mkt]')];
+  for (const sel of sels) {
     sel.value = market;
     sel.hidden = false;
-    sel.addEventListener('change', () => { market = sel.value; try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ } apply(market); });
+    sel.addEventListener('change', () => {
+      market = sel.value;
+      for (const other of sels) other.value = market;
+      try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ }
+      apply(market);
+    });
   }
   apply(market);
   // «ثبّت يستاهل على جوالك» appears only where the browser offers installing. iPhone and iPad

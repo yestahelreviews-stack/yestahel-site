@@ -284,6 +284,8 @@ p{margin:0 0 .8rem}
 .ptable caption{caption-side:top;text-align:start;padding-bottom:.5rem;font-weight:700;line-height:1.7}
 .ptable caption .muted{font-weight:400;font-size:.88rem}
 .ptable th,.ptable td{padding:.6rem .75rem;border-top:1px solid var(--rule);text-align:start;vertical-align:middle}
+.ptable s.was{color:var(--muted);font-weight:400}
+.ptable td.p small{display:block;color:var(--muted);font-size:.78rem}
 .ptable thead th{border-top:0;background:var(--bg);font-size:.78rem;font-weight:700;color:var(--muted)}
 .ptable tbody th{font-weight:800;line-height:1.5}
 .ptable tbody th small{display:block;font-weight:400;font-size:.78rem;color:var(--muted)}

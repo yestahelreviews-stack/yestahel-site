@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=amqjp2">
+<link rel="stylesheet" href="/assets/site.css?v=h1b4hl">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://yestahel.net/review/philips-airfryer-l-vs-xl/#article","headline":"قلاية فيليبس L ولا XL؟ الأكثر مبيعاً في نون","description":"قارنّا قلاية فيليبس L (4.2 لتر) ب وقلاية فيليبس XL (6.2 لتر بشباك) ب في نون، وهم الأولى والثالثة في قلايات هوائية. قرأنا تقييمات نون ولخّصنا المدح والشكاوى بكلامنا. L تقييمها في نون 4.6 من 1,915، وXL 4.7 من 1,599.","inLanguage":"ar","datePublished":"2026-10-24","dateModified":"2026-10-24","author":[{"@type":"Person","name":"راشد"},{"@type":"Person","name":"آلاء"}],"publisher":{"@id":"https://yestahel.net/#org"},"mainEntityOfPage":"https://yestahel.net/review/philips-airfryer-l-vs-xl/","articleSection":"البيت والمطبخ","about":[{"@id":"https://yestahel.net/review/philips-airfryer-l-vs-xl/#pd-cheap"},{"@id":"https://yestahel.net/review/philips-airfryer-l-vs-xl/#pd-alt"}],"image":"https://yestahel.net/assets/og.png"},{"@type":"Organization","@id":"https://yestahel.net/#org","name":"يستاهل؟","alternateName":"Yestahel","url":"https://yestahel.net/","logo":"https://yestahel.net/assets/icon.svg","sameAs":["https://www.youtube.com/@yestahel_sa"]},{"@type":"Product","@id":"https://yestahel.net/review/philips-airfryer-l-vs-xl/#pd-cheap","name":"قلاية هوائية 4.2 لتر 1500 واط (فيليبس L)","category":"البيت والمطبخ","brand":{"@type":"Brand","name":"فيليبس L"},"offers":{"@type":"AggregateOffer","priceCurrency":"SAR","lowPrice":299,"highPrice":299,"offerCount":1,"offers":[{"@type":"Offer","price":299,"priceCurrency":"SAR","url":"https://www.noon.com/saudi-ar/N70131428V/p/","seller":{"@type":"Organization","name":"نون"}}]}},{"@type":"Product","@id":"https://yestahel.net/review/philips-airfryer-l-vs-xl/#pd-alt","name":"قلاية هوائية 6.2 لتر بشباك 1700 واط (فيليبس XL)","category":"البيت والمطبخ","brand":{"@type":"Brand","name":"فيليبس XL"},"offers":{"@type":"AggregateOffer","priceCurrency":"SAR","lowPrice":414,"highPrice":414,"offerCount":1,"offers":[{"@type":"Offer","price":414,"priceCurrency":"SAR","url":"https://www.noon.com/saudi-ar/N70131429V/p/","seller":{"@type":"Organization","name":"نون"}}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://yestahel.net/"},{"@type":"ListItem","position":2,"name":"البيت والمطبخ","item":"https://yestahel.net/home-kitchen/"},{"@type":"ListItem","position":3,"name":"قلاية فيليبس L ولا XL؟ الأكثر مبيعاً في نون"}]}]}</script>
 </head>
 <body>
@@ -294,11 +294,17 @@
       note.textContent = `${missing ? `${missing === links ? 'منتجات هالصفحة' : 'بعض منتجات هالصفحة'} ما لقيناها في متاجر ${cfg.markets[m]}، فروابطها للمتاجر السعودية. ` : ''}الأسعار المعروضة بالريال من المتاجر السعودية.`;
     }
   };
-  const sel = document.getElementById('mkt');
-  if (sel) {
+  // #mkt in the header, plus any select[data-mkt] (the new design's mobile header has its own).
+  const sels = [...document.querySelectorAll('select#mkt, select[data-mkt]')];
+  for (const sel of sels) {
     sel.value = market;
     sel.hidden = false;
-    sel.addEventListener('change', () => { market = sel.value; try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ } apply(market); });
+    sel.addEventListener('change', () => {
+      market = sel.value;
+      for (const other of sels) other.value = market;
+      try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ }
+      apply(market);
+    });
   }
   apply(market);
   // «ثبّت يستاهل على جوالك» appears only where the browser offers installing. iPhone and iPad

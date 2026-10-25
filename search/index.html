@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=amqjp2">
+<link rel="stylesheet" href="/assets/site.css?v=h1b4hl">
 </head>
 <body>
 <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
@@ -151,11 +151,17 @@
       note.textContent = `${missing ? `${missing === links ? 'منتجات هالصفحة' : 'بعض منتجات هالصفحة'} ما لقيناها في متاجر ${cfg.markets[m]}، فروابطها للمتاجر السعودية. ` : ''}الأسعار المعروضة بالريال من المتاجر السعودية.`;
     }
   };
-  const sel = document.getElementById('mkt');
-  if (sel) {
+  // #mkt in the header, plus any select[data-mkt] (the new design's mobile header has its own).
+  const sels = [...document.querySelectorAll('select#mkt, select[data-mkt]')];
+  for (const sel of sels) {
     sel.value = market;
     sel.hidden = false;
-    sel.addEventListener('change', () => { market = sel.value; try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ } apply(market); });
+    sel.addEventListener('change', () => {
+      market = sel.value;
+      for (const other of sels) other.value = market;
+      try { localStorage.setItem(KEY, market); } catch (e) { /* private mode: this page only */ }
+      apply(market);
+    });
   }
   apply(market);
   // «ثبّت يستاهل على جوالك» appears only where the browser offers installing. iPhone and iPad
