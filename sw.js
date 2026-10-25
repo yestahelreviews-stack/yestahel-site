@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'yestahel-amqjp2-2026-10-24';
+const CACHE = 'yestahel-amqjp2-2026-10-25';
 const CORE = ['/', '/assets/site.css?v=amqjp2', '/assets/icon.svg', '/manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
