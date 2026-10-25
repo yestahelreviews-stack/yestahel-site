@@ -165,7 +165,7 @@
     if (!q) {
       const recent = LS.get('searches', []).filter(x => typeof x === 'string').slice(0, 8);
       const trending = [...new Set([...S.POPULAR.slice(0, 10), ...((D.trends.sa || { items: [] }).items.slice(0, 8).map(i => short(i.name, 26).replace('…', '')))])].slice(0, 18);
-      const tile = t => { const top = S.run(t).items[0]; return `<a href="${sUrl(t)}" data-q="${esc(t)}">${top ? pic(top) : kpic('box', t)}<span>${esc(t)}</span></a>`; };
+      const tile = t => { const top = S.run(t).items[0]; return `<a href="${sUrl(t)}" data-q="${esc(t)}">${top ? pic(top, 0, 't', 'tiny') : kpic('box', t)}<span>${esc(t)}</span></a>`; };
       return (recent.length
         ? `<div class="sp-sec"><h4>آخر أشياء بحثت عنها <button type="button" data-act="clear-searches">امسح</button></h4><div class="recent">${recent.map(tile).join('')}</div></div>`
         : `<div class="sp-sec"><h4>جرّب تسأل بطريقتك</h4><div class="recent">${EXAMPLES.map(tile).join('')}</div></div>`)
@@ -182,7 +182,7 @@
     rows.push(...sugg.map(s => `<a href="${sUrl(s.text)}" data-q="${esc(s.text)}">${ic('search', 's')}<span>${s.html}</span></a>`));
     if (!sugg.length && !r.labels.length) rows.push(`<a href="${sUrl(q)}" data-q="${esc(q)}">${ic('search', 's')}<span>ابحث عن <b>${esc(q)}</b></span></a>`);
     const prods = r.items.slice(0, 4);
-    return `<div class="sugg">${rows.join('')}</div>${prods.length ? `<div class="sp-sec"><h4>منتجات مقترحة</h4></div><div class="sp-prods">${prods.map(p => `<a class="sp-prod" href="${u(p.href)}">${pic(p)}<span><b>${esc(p.title)}</b><span class="mini">${stampMini(p)}${p.price != null ? `<strong>${money(p.price)} ر.س</strong>` : ''}</span></span></a>`).join('')}</div>` : ''}`;
+    return `<div class="sugg">${rows.join('')}</div>${prods.length ? `<div class="sp-sec"><h4>منتجات مقترحة</h4></div><div class="sp-prods">${prods.map(p => `<a class="sp-prod" href="${u(p.href)}">${pic(p, 0, 't', 'tiny')}<span><b>${esc(p.title)}</b><span class="mini">${stampMini(p)}${p.price != null ? `<strong>${money(p.price)} ر.س</strong>` : ''}</span></span></a>`).join('')}</div>` : ''}`;
   }
   // A link in the panel with a search in it goes to «last searches».
   document.addEventListener('click', e => { const a = e.target.closest('#sp [data-q], #msearch [data-q], .tpills a, .cloud a'); if (a) record(a.dataset.q || a.textContent); }, true);

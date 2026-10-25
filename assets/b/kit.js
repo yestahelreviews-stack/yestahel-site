@@ -20,10 +20,14 @@
     const dotCls = (i, on) => { const d = Math.abs(i - on); return d === 0 ? 'on' : d === 1 ? 'n1' : d === 2 ? 'n2' : 'n3'; };
 
     const img = (ph, eager = false) => `<img src="${esc(u(ph.src))}" alt="${esc(ph.alt)}"${ph.size ? ` width="${ph.size[0]}" height="${ph.size[1]}"` : ''}${eager ? '' : ' loading="lazy"'} decoding="async">`;
+    // A photo is shown with its source («الصورة من …»): partners make it a condition (FitNeeds).
+    const cap = ph => (ph && ph.caption ? `<span class="phc">${esc(ph.caption)}</span>` : '');
     // The cleared photo when there is one, else the product's drawing (art.js), never a store image.
-    const pic = (p, view = 0, cls = 't') => {
-      const ph = view === 0 ? p.ph : null;
-      return ph ? `<div class="${cls} photo">${img(ph)}</div>` : `<div class="${cls}" style="background:${A.tint(p.kind, p.id)}">${A.svg(p.kind, { seed: p.id, view, label: view ? '' : p.title })}</div>`;
+    // mode 'cap': the photo carries its source on it; 'tiny': a thumbnail with no room for the
+    // source shows the drawing instead (the product's own page shows the photo and its source).
+    const pic = (p, view = 0, cls = 't', mode = '') => {
+      const ph = view === 0 && mode !== 'tiny' ? p.ph : null;
+      return ph ? `<div class="${cls} photo">${img(ph)}${mode === 'cap' ? cap(ph) : ''}</div>` : `<div class="${cls}" style="background:${A.tint(p.kind, p.id)}">${A.svg(p.kind, { seed: p.id, view, label: view ? '' : p.title })}</div>`;
     };
     // lazy: an empty tile that ui.js draws when it shows (hidden tabs stay light).
     const kpic = (kind, seed, cls = 't', lazy = false) => (lazy
@@ -67,9 +71,9 @@
       const ph = p.ph;
       const views = ph ? [0] : [0, 1, 3];
       return `<article class="card${o.compact ? ' compact' : ''}"${o.d ? ` data-d="${esc(p.dept)}"` : ''}>
-      <a class="card-img" href="${u(p.href)}" style="background:${ph ? '#fff' : A.tint(p.kind, p.id)}" tabindex="-1" aria-hidden="true"${ph ? '' : ` data-kind="${esc(p.kind)}" data-seed="${esc(p.id)}"`}>
+      <a class="card-img${ph ? ' ph' : ''}" href="${u(p.href)}" style="background:${ph ? '#fff' : A.tint(p.kind, p.id)}" tabindex="-1" aria-hidden="true"${ph ? '' : ` data-kind="${esc(p.kind)}" data-seed="${esc(p.id)}"`}>
         <div class="slides" data-i="0">${views.map((v, i) => `<div class="slide${i ? '' : ' on'}"${i || o.lazy ? ` data-view="${v}"` : ''}>${ph ? img(ph) : i || o.lazy ? '' : A.svg(p.kind, { seed: p.id, view: v, label: p.title })}</div>`).join('')}</div>
-        ${ribbon(p)}
+        ${cap(ph)}${ribbon(p)}
         ${views.length > 1 ? `<button class="iarw p" type="button" data-act="img-prev" aria-label="الصورة السابقة">${ic('chev-r', 's')}</button><button class="iarw n" type="button" data-act="img-next" aria-label="الصورة التالية">${ic('chev-l', 's')}</button>
         <div class="idots">${views.map((_, i) => `<i class="${dotCls(i, 0)}"></i>`).join('')}</div>` : ''}
         ${o.deal && p.price != null ? `<span class="dpill">سعر ${dAr(p.priceDate)}</span>` : p.video ? `<span class="vbadge">${ic('play', 'xs')} فيديو</span>` : ''}
@@ -85,7 +89,7 @@
     }
     const cards = (list, o) => list.map(p => card(p, o)).join('');
 
-    return { esc, u, ic, dAr, money, short, hash, deptName, kindName, pendingLabel, dotCls, img, pic, kpic, stamp, stampMini, priceTag, secH, rail, ribbon, vpill, nudges, card, cards, MONTHS };
+    return { esc, u, ic, dAr, money, short, hash, deptName, kindName, pendingLabel, dotCls, img, cap, pic, kpic, stamp, stampMini, priceTag, secH, rail, ribbon, vpill, nudges, card, cards, MONTHS };
   };
   // A store link's ids, for «الصق رابطك» (/check/): noon's product id, Amazon's ASIN, Jarir's and
   // Extra's product numbers, and the bare address for every store. The build indexes our products

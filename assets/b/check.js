@@ -54,7 +54,7 @@
       <button class="btn ghost" type="button" data-act="chk-copy" data-u="${esc(link)}">انسخ الرابط</button></div>
       <p class="fnote">في إنستغرام الصق الرابط في الرسالة. الإيميل يفتح والرابط مكتوب فيه.</p></div>`;
   };
-  const nearHtml = list => (list.length ? `<div class="chk-near"><h3>منتجات قريبة منه عندنا <span class="sub">مو بالضرورة نفس المنتج</span></h3><div class="sp-prods">${list.map(p => `<a class="sp-prod" href="${u(p.href)}">${pic(p)}<span><b>${esc(p.title)}</b><span class="mini">${K.stampMini(p)}${p.price != null ? `<strong>${money(p.price)} ر.س</strong>` : ''}</span></span></a>`).join('')}</div></div>` : '');
+  const nearHtml = list => (list.length ? `<div class="chk-near"><h3>منتجات قريبة منه عندنا <span class="sub">مو بالضرورة نفس المنتج</span></h3><div class="sp-prods">${list.map(p => `<a class="sp-prod" href="${u(p.href)}">${pic(p, 0, 't', 'tiny')}<span><b>${esc(p.title)}</b><span class="mini">${K.stampMini(p)}${p.price != null ? `<strong>${money(p.price)} ر.س</strong>` : ''}</span></span></a>`).join('')}</div></div>` : '');
 
   // Our product for this link: its verdict, why, the last price we read, and where to go next.
   function found(p, link) {
@@ -64,7 +64,7 @@
     const head = !reviewed ? 'هالمنتج في قوائمنا، بس ما راجعناه للحين' : p.verdict === null ? 'راجعناه، والحكم قريباً' : 'راجعناه، وهذا حكمنا';
     return `<section class="chk-res${p.verdict === true ? ' yes' : p.verdict === false ? ' no' : ''}">
       <p class="cmp-kick">${ic(reviewed ? 'check' : 'info', 's')} ${head} · الرابط من ${esc(storeOf(hostOf(link)))}</p>
-      <div class="chk-top">${pic(p)}<div style="min-width:0"><h2>${esc(p.title)}</h2>${reviewed ? stamp(p.verdict, 'l', p) : ''}</div></div>
+      <div class="chk-top">${pic(p, 0, 't', 'cap')}<div style="min-width:0"><h2>${esc(p.title)}</h2>${reviewed ? stamp(p.verdict, 'l', p) : ''}</div></div>
       ${why ? `<p class="chk-why">${esc(why)}</p>` : ''}
       <p class="chk-price">${p.price != null ? `${ic('clock', 's')} آخر سعر قريناه: <b>${money(p.price)} ر.س</b> في ${esc(p.store)} يوم ${dAr(p.priceDate)}` : `${ic('store', 's')} السعر في صفحة المتجر`}</p>
       <div class="chk-acts"><a class="btn pri" href="${u(p.href)}">${reviewed ? 'شوف الحكم كامل' : 'شوف صفحته عندنا'}</a>${c ? `<a class="btn ghost" href="${u(`/review/${c.slug}/`)}">${ic('scale', 's')} المقارنة</a>` : ''}<a class="btn ghost" href="${u(p.href)}#where">${ic('store', 's')} وين أرخص؟</a></div>

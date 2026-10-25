@@ -1130,3 +1130,8 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
   .chk-res { padding: 16px 14px; }
   .chk-res h2 { font-size: 17px; }
 }
+/* A photo's source on it («الصورة من …»): cards, comparison pairs, the camping tiles, /check/. */
+.t.photo { position: relative; overflow: hidden; }
+.phc { position: absolute; inset-inline: 0; bottom: 0; z-index: 1; padding: 3px 6px; font-size: 10px; line-height: 1.3; font-weight: 500; color: var(--mute); background: rgba(255, 255, 255, .92); text-align: center; max-height: 2.9em; overflow: hidden; pointer-events: none; }
+.card-img.ph .dpill, .card-img.ph .vbadge { bottom: 34px; }
+.cmpc .pair .phc { font-size: 9px; }

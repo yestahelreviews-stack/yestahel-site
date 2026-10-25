@@ -102,7 +102,7 @@
       const c = (run.cmp && run.cmp.comparison) || (f.q && items[0] ? CMP_OF.get(items[0].id) : null);
       if (c) {
         const a = D.products.find(p => p.id === c.a), b = D.products.find(p => p.id === c.b);
-        if (a && b) hint = `<div class="hint"><span class="pair">${pic(a)}${pic(b)}</span><span><b>مقارنة جاهزة: ${esc(short(c.title, 60))}</b><p>نفس المعايير للاثنين، والحكم في الآخر</p></span><a class="btn pri sm" href="${u(reviewUrl(c))}">${ic('scale', 's')} قارنهم</a></div>`;
+        if (a && b) hint = `<div class="hint"><span class="pair">${pic(a, 0, 't', 'tiny')}${pic(b, 0, 't', 'tiny')}</span><span><b>مقارنة جاهزة: ${esc(short(c.title, 60))}</b><p>نفس المعايير للاثنين، والحكم في الآخر</p></span><a class="btn pri sm" href="${u(reviewUrl(c))}">${ic('scale', 's')} قارنهم</a></div>`;
       }
       // A store link in the search box: «الصق رابطك» reads it (header search sends it there too).
       if (/^https?:\/\//i.test(f.q)) hint = `<div class="hint">${ic('external')}<span><b>هذا رابط منتج</b><p>نقرأ رقم المنتج من الرابط ونقولك حكمنا.</p></span><a class="btn pri sm" href="${u(`/check/?u=${encodeURIComponent(f.q)}`)}">افحص الرابط</a></div>`;
