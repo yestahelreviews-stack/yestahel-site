@@ -99,6 +99,12 @@
       $$('[data-act="trend-mkt"]').forEach(b => b.classList.toggle('on', b === el));
       $$('[data-trend]').forEach(t => { t.hidden = t.dataset.trend !== el.dataset.m; });
     } else if (act === 'dtab') dtab(el.dataset.d);
+    else if (act === 'tabgo') { // tabs inside one section (home: «تحت 100 ر.س في كل قسم»)
+      const sec = el.closest('[data-tabs]');
+      $$('[data-act="tabgo"]', sec).forEach(b => { const on = b === el; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
+      $$('[data-tp]', sec).forEach(p => { p.hidden = p.dataset.tp !== el.dataset.t; });
+      drawLazy($(`[data-tp="${el.dataset.t}"]`, sec));
+    }
     else if (act === 'cat') { catGo(el.dataset.d); try { history.replaceState(null, '', `#${el.dataset.d}`); } catch { /* file preview */ } }
     else if (act === 'clear-searches') { stop(); LS.set('searches', []); refill(); }
     else if (act === 'close-ms') closeMs();

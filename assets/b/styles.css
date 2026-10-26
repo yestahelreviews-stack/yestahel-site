@@ -1176,3 +1176,32 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
   .bnr-t { background: linear-gradient(to left, rgba(20, 28, 36, .82) 55%, rgba(20, 28, 36, 0)); width: 62%; }
   .bnr-t h1, .bnr-t h2, .bnr-t p { text-shadow: 0 1px 6px rgba(0, 0, 0, .45); }
 }
+/* Colored strips on product and comparison pages: the department, the next sale, «الصق رابطك». */
+.strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.strips.n1 { grid-template-columns: 1fr; }
+.sec > .strips { margin-top: 0; }
+.strip { position: relative; display: flex; align-items: center; gap: 14px; border-radius: 14px; padding: 12px 18px; min-height: 88px; color: #fff; overflow: hidden; isolation: isolate; }
+.strip::after { content: ""; position: absolute; inset-inline-end: -40px; top: -50px; width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, .16), transparent 70%); z-index: -1; }
+.strip .si { width: 64px; height: 64px; flex: none; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, .1); }
+.strip .si .dicon, .strip .si .t { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; }
+.strip .si > .ic { width: 30px; height: 30px; }
+.strip .st { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.strip b { font-size: 17px; font-weight: 800; line-height: 1.35; }
+.strip small { font-size: 13px; opacity: .88; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.strip .cta { flex: none; background: rgba(255, 255, 255, .16); padding: 8px 14px; border-radius: 10px; font-weight: 800; font-size: 13px; display: inline-flex; gap: 4px; align-items: center; }
+.strip:hover .cta { background: rgba(255, 255, 255, .26); }
+.strip.t-ink { background: linear-gradient(120deg, #23303B, #2F4A50); }
+.strip.t-lime { background: linear-gradient(120deg, #D7FF3B, #BCE83A); color: var(--lime-ink); }
+.strip.t-lime .si { background: rgba(31, 41, 21, .1); }
+.strip.t-lime .cta { background: var(--lime-ink); color: var(--lime); }
+.strip.t-plum { background: linear-gradient(120deg, #3E3753, #5B4C7A); }
+.tabchips { padding-top: 0; }
+.tabchips .chip .n { color: var(--faint); font-weight: 500; font-size: 12px; }
+.tabchips .chip.on .n { color: var(--hdr-mute); }
+@media (max-width: 767px) {
+  .strips { grid-template-columns: 1fr; gap: 8px; }
+  .strip { min-height: 74px; padding: 10px 14px; gap: 12px; }
+  .strip .si, .strip .si .dicon, .strip .si .t { width: 52px; height: 52px; }
+  .strip b { font-size: 15px; }
+  .strip .cta { display: none; }
+}
