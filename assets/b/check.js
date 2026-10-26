@@ -66,7 +66,7 @@
       <p class="cmp-kick">${ic(reviewed ? 'check' : 'info', 's')} ${head} · الرابط من ${esc(storeOf(hostOf(link)))}</p>
       <div class="chk-top">${pic(p, 0, 't', 'cap')}<div style="min-width:0"><h2>${esc(p.title)}</h2>${reviewed ? stamp(p.verdict, 'l', p) : ''}</div></div>
       ${why ? `<p class="chk-why">${esc(why)}</p>` : ''}
-      <p class="chk-price">${p.price != null ? `${ic('clock', 's')} آخر سعر قريناه: <b>${money(p.price)} ر.س</b> في ${esc(p.store)} يوم ${dAr(p.priceDate)}` : `${ic('store', 's')} السعر في صفحة المتجر`}</p>
+      <p class="chk-price">${p.price != null ? `${ic('clock', 's')} آخر سعر قريناه: <b>${money(p.price)} ر.س</b> في ${esc(p.store)} · الأسعار تتغيّر، وصفحة المتجر هي المرجع` : `${ic('store', 's')} السعر في صفحة المتجر`}</p>
       <div class="chk-acts"><a class="btn pri" href="${u(p.href)}">${reviewed ? 'شوف الحكم كامل' : 'شوف صفحته عندنا'}</a>${c ? `<a class="btn ghost" href="${u(`/review/${c.slug}/`)}">${ic('scale', 's')} المقارنة</a>` : ''}<a class="btn ghost" href="${u(p.href)}#where">${ic('store', 's')} وين أرخص؟</a></div>
       ${reviewed ? '' : sendBox(link, 'تبي نراجعه؟')}
     </section>`;
@@ -78,7 +78,7 @@
     if (j.kind !== 'auto' || typeof j.headline !== 'string') return null;
     const pts = (Array.isArray(j.points) ? j.points : []).filter(x => x && typeof x.text === 'string').slice(0, 6);
     const src = (Array.isArray(j.sources) ? j.sources : []).filter(s => s && /^https:\/\//.test(s.url || '')).slice(0, 6);
-    return `<section class="chk-res auto"><p class="cmp-kick">${ic('sparkle', 's')} حكم أولي آلي، مو مراجعة يستاهل${j.read_on ? ` · ${esc(dAr(j.read_on))}` : ''}</p>
+    return `<section class="chk-res auto"><p class="cmp-kick">${ic('sparkle', 's')} حكم أولي آلي، مو مراجعة يستاهل</p>
       <h2>${esc(j.headline)}</h2>${pts.length ? `<ul class="whyl">${pts.map(x => `<li>${ic('info', 's')}<span>${esc(x.text)}</span></li>`).join('')}</ul>` : ''}
       ${src.length ? `<p class="fnote">المصادر: ${src.map(s => `<a href="${esc(s.url)}" rel="nofollow noopener" target="_blank">${esc(s.label || hostOf(s.url))}</a>`).join('، ')}</p>` : ''}
       ${sendBox(link, 'تبي مراجعتنا الكاملة؟')}</section>`;

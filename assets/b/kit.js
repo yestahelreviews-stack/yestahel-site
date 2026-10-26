@@ -58,7 +58,7 @@
       if (p.video) L.push(['video', 'راجعناه بالفيديو']);
       if (cmpOf(p.id)) L.push(['scale', 'له مقارنة جاهزة']);
       if (p.pros && p.pros[0]) L.push(['check', short(p.pros[0], 42)]);
-      if (p.price != null) L.push(['clock', `سعر ${p.store} ${dAr(p.priceDate)}`]);
+      if (p.price != null && p.store) L.push(['store', `سعره في ${p.store}`]);
       const three = L.slice(0, 3);
       if (three.length < 2) return `<div class="nudge"><ul style="animation:none">${three.map(([i, t]) => `<li>${ic(i, 'xs')}${esc(t)}</li>`).join('')}</ul></div>`;
       while (three.length < 3) three.push(three[0]);
@@ -76,7 +76,7 @@
         ${cap(ph)}${ribbon(p)}
         ${views.length > 1 ? `<button class="iarw p" type="button" data-act="img-prev" aria-label="الصورة السابقة">${ic('chev-r', 's')}</button><button class="iarw n" type="button" data-act="img-next" aria-label="الصورة التالية">${ic('chev-l', 's')}</button>
         <div class="idots">${views.map((_, i) => `<i class="${dotCls(i, 0)}"></i>`).join('')}</div>` : ''}
-        ${o.deal && p.price != null ? `<span class="dpill">سعر ${dAr(p.priceDate)}</span>` : p.video ? `<span class="vbadge">${ic('play', 'xs')} فيديو</span>` : ''}
+        ${o.deal && p.price != null ? `<span class="dpill">سعر مسجّل</span>` : p.video ? `<span class="vbadge">${ic('play', 'xs')} فيديو</span>` : ''}
       </a>
       <a class="card-b" href="${u(p.href)}">
         <h3 class="card-t">${esc(p.title)}</h3>
