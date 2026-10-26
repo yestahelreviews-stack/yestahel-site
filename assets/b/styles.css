@@ -1135,3 +1135,12 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
 .phc { position: absolute; inset-inline: 0; bottom: 0; z-index: 1; padding: 3px 6px; font-size: 10px; line-height: 1.3; font-weight: 500; color: var(--mute); background: rgba(255, 255, 255, .92); text-align: center; max-height: 2.9em; overflow: hidden; pointer-events: none; }
 .card-img.ph .dpill, .card-img.ph .vbadge { bottom: 34px; }
 .cmpc .pair .phc { font-size: 9px; }
+/* Department icons (Design, docs/design/site-art/depts): on the tiles, category tabs and headers. */
+.dicon { display: block; width: 100%; height: 100%; object-fit: contain; }
+.tile .t:has(> .dicon) { overflow: visible; }
+.dhead { display: flex; gap: 16px; align-items: center; }
+.dhead > .dicon { width: 112px; height: 112px; flex: none; }
+.cats-banner > .dicon { width: 72px; height: 72px; flex: none; margin: -8px 0; }
+.cats-side .t:has(> .dicon) { background: transparent; }
+@media (max-width: 767px) { .dhead > .dicon { width: 76px; height: 76px; } }
+@media (max-width: 767px) { .cats-banner > .dicon { display: none; } }
