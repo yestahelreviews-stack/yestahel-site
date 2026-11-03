@@ -1,6 +1,6 @@
 'use strict';
-const CACHE = 'yestahel-h1b4hl-j9emco-2026-10-26';
-const CORE = ['/', '/assets/site.css?v=h1b4hl', '/assets/icon.svg', '/manifest.webmanifest', '/assets/b/styles.css?v=j9emco', '/assets/b/art.js?v=j9emco', '/assets/b/ui.js?v=j9emco'];
+const CACHE = 'yestahel-h1b4hl-1bl64o1-2026-11-03';
+const CORE = ['/', '/assets/site.css?v=h1b4hl', '/assets/icon.svg', '/manifest.webmanifest', '/assets/b/styles.css?v=1bl64o1', '/assets/b/art.js?v=1bl64o1', '/assets/b/ui.js?v=1bl64o1'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));

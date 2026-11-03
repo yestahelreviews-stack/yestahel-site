@@ -17,7 +17,8 @@
     // Daily price recording hasn't started yet, so the «real discount» tools say when they open.
     const TRACK_READY = 'بعد 30 يوم من بداية التسجيل';
     const EXAMPLES = ['ارخص شاحن ايفون', 'هدية تحت 200', 'انكر ولا يوجرين', 'للكشتة', 'قلايه'];
-    const SORTS = [['best', 'الأنسب'], ['verdict', 'حكمنا أولاً'], ['price', 'الأرخص'], ['price-desc', 'الأغلى'], ['video', 'فيه فيديو أولاً']];
+    const HAS_VIDEO = D.products.some(p => p.video); // no published video yet: no video sort, chip or filter
+    const SORTS = [['best', 'الأنسب'], ['verdict', 'حكمنا أولاً'], ['price', 'الأرخص'], ['price-desc', 'الأغلى'], ...(HAS_VIDEO ? [['video', 'فيه فيديو أولاً']] : [])];
     const VLABEL = { yes: 'يستاهل', no: 'ما يستاهل', none: 'لم نحكم بعد' };
     const FKEYS = ['q', 'dept', 'kind', 'brand', 'store', 'verdict', 'video', 'min', 'max', 'sort', 'page'];
     const qs = o => { const p = []; for (const [k, v] of Object.entries(o)) if (v != null && v !== '' && !(Array.isArray(v) && !v.length)) p.push(`${k}=${encodeURIComponent(Array.isArray(v) ? v.join(',') : v)}`); return p.length ? `?${p.join('&')}` : ''; };
@@ -68,8 +69,8 @@
       const by = {
         price: (a, b) => (a.price ?? 1e9) - (b.price ?? 1e9), 'price-desc': (a, b) => (b.price ?? -1) - (a.price ?? -1),
         verdict: (a, b) => (b.verdict === true) - (a.verdict === true) || (b.video - a.video), video: (a, b) => b.video - a.video,
-        // «الأنسب» with no words: our يستاهل picks first, then the list's own order, then ما يستاهل.
-        best: f.q ? null : (a, b) => tier(a) - tier(b),
+        // «الأنسب» with no words: real photos first, then our يستاهل picks, the list's own order, then ما يستاهل.
+        best: f.q ? null : (a, b) => !!b.ph - !!a.ph || tier(a) - tier(b),
       };
       if (by[sort]) items = items.slice().sort(by[sort]);
       return { run, items, facets, sort, dept };
@@ -79,7 +80,7 @@
       const grp = (title, body, o = {}) => `<div class="fg${o.closed ? ' closed' : ''}"><h4 data-act="fg">${title}${o.isNew ? '<span class="new">من يستاهل</span>' : ''}<span style="margin-inline-start:auto"></span>${ic('chev-d', 's')}</h4><div class="fbody">${body}</div></div>`;
       const brands = R.facets.brand;
       return [
-        grp('حكمنا', R.facets.verdict.map(([v, n]) => ck('verdict', v, VLABEL[v], n, f.verdict.includes(v))).join('') + ck('video', '1', 'فيه مراجعة فيديو', R.facets.video, f.video), { isNew: true }),
+        grp('حكمنا', R.facets.verdict.map(([v, n]) => ck('verdict', v, VLABEL[v], n, f.verdict.includes(v))).join('') + (HAS_VIDEO ? ck('video', '1', 'فيه مراجعة فيديو', R.facets.video, f.video) : ''), { isNew: true }),
         grp('الفئة', `${f.dept ? `<a class="morel" href="${hrefWith(f, { dept: '', kind: [] })}">${ic('chev-r', 'xs')} كل الفئات</a>` : ''}`
           + (f.dept ? '' : R.facets.dept.map(([d, n]) => `<a class="ck" href="${hrefWith(f, { dept: d })}"><span>${esc(deptName(d))}</span><span class="n">${n}</span></a>`).join(''))
           + (f.dept ? `<div style="padding-inline-start:8px"><b style="display:block;color:var(--ink);font-size:13px;margin:6px 0">${esc(deptName(f.dept))}</b>${R.facets.kind.map(([k, n]) => ck('kind', k, esc(kindName(k)), n, f.kind.includes(k))).join('')}</div>` : '')),
@@ -111,7 +112,7 @@
       const chips = [
         understood,
         `<a class="chip ours${yesOnly ? ' on' : ''}" href="${hrefWith(f, { verdict: yesOnly ? [] : ['yes'] })}">${ic('check', 's')} حكمنا: يستاهل فقط</a>`,
-        `<a class="chip ours${f.video ? ' on' : ''}" href="${hrefWith(f, { video: !f.video })}">${ic('video', 's')} فيه فيديو</a>`,
+        HAS_VIDEO ? `<a class="chip ours${f.video ? ' on' : ''}" href="${hrefWith(f, { video: !f.video })}">${ic('video', 's')} فيه فيديو</a>` : '',
         `<a class="chip${f.max === '100' ? ' on' : ''}" href="${hrefWith(f, { max: f.max === '100' ? '' : '100' })}">تحت 100 ر.س</a>`,
         `<span class="chip" style="opacity:.55" title="يشتغل ${TRACK_READY}">${ic('clock', 's')} خصم حقيقي</span>`,
         ...(f.dept ? [] : R.facets.dept.slice(0, 4).map(([d]) => `<a class="chip" href="${hrefWith(f, { dept: d })}">${esc(deptName(d))}</a>`)),

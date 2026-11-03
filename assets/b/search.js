@@ -90,6 +90,7 @@
     projector: ['البروجكترات', 'بروجكتر'], vacuum: ['المكانس', 'مكنسة'], speaker: ['السماعات الخارجية', 'سماعة خارجية'],
     gamepad: ['الألعاب وأيادي التحكم', 'يد تحكم'], toy: ['ألعاب الأطفال', 'لعبة'], car: ['إكسسوارات السيارة', 'إكسسوار سيارة'], box: ['إلكترونيات', 'جهاز'],
     laptop: ['اللابتوبات', 'لابتوب'], camera: ['الكاميرات', 'كاميرا'], dumbbell: ['أدوات التمرين', 'دمبل'], stove: ['الدوافير', 'دافور'], humidifier: ['مرطبات الجو', 'مرطب جو'],
+    racket: ['المضارب والبادل', 'مضرب'], supplement: ['البروتين والكرياتين', 'مكمل'], snack: ['بروتين بار وسناكات', 'سناك'], bottle: ['الشيكرات والقوارير', 'شيكر'],
   };
   // A noon-style full title for episode products: the name, then what the description adds.
   // Names like «الشاحن الأكثر مبيعاً» are series labels, so the description leads instead.
@@ -220,7 +221,7 @@
     for (const d of docs) {
       const s = any ? scoreDoc(d, keys, terms) : 1;
       if (s < 0) continue;
-      scored.push({ p: d.p, s: s + (d.p.verdict === true ? 1 : 0) + (d.p.video ? 0.5 : 0) + (d.p.price != null ? 0.3 : 0) });
+      scored.push({ p: d.p, s: s + (d.p.verdict === true ? 1 : 0) + (d.p.video ? 0.5 : 0) + (d.p.price != null ? 0.3 : 0) + (d.p.ph ? 0.4 : 0) });
     }
     // Two products typed together: show both sides.
     const cmp = findCompare(P);

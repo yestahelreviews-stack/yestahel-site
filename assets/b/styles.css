@@ -1135,6 +1135,23 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
 .phc { position: absolute; inset-inline: 0; bottom: 0; z-index: 1; padding: 3px 6px; font-size: 10px; line-height: 1.3; font-weight: 500; color: var(--mute); background: rgba(255, 255, 255, .92); text-align: center; max-height: 2.9em; overflow: hidden; pointer-events: none; }
 .card-img.ph .dpill, .card-img.ph .vbadge { bottom: 34px; }
 .cmpc .pair .phc { font-size: 9px; }
+/* Home: real photos in the hero and the reels, their source beside them (too small to carry it on the photo). */
+.hslide .hart { padding: 10px 0 22px; align-items: center; }
+.hslide .hcap { position: absolute; inset-inline-end: 14px; bottom: 5px; max-width: calc(100% - 28px); font-size: 10px; line-height: 1.2; color: rgba(255, 255, 255, .85); z-index: 2; }
+@media (max-width: 767px) { /* one photo on a phone: two leave the words no room */
+  .hslide .hart { flex: none; padding: 0 0 18px; }
+  .hslide .hart .pic { width: 104px; height: 104px; }
+  .hslide .hart .pic ~ .pic, .hslide .hart .vs { display: none; }
+}
+.reel .bg > div { background: #fff; }
+.reel .bg img { width: 100%; height: 100%; object-fit: contain; padding: 10%; }
+.bud .bp .t.photo img { padding: 6%; }
+/* Short lists sit centred: a rail on wide screens (on phones it scrolls, and centring would cut its start),
+   the camping list at a good size instead of filling a third of a nine-column row. */
+@media (min-width: 1024px) { .rail.few { justify-content: center; } }
+.talls.few { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.talls.few .tall { width: min(190px, 30%); }
+.talls.few .tall .t { aspect-ratio: 1; }
 /* Department icons (Design, docs/design/site-art/depts): on the tiles, category tabs and headers. */
 .dicon { display: block; width: 100%; height: 100%; object-fit: contain; }
 .tile .t:has(> .dicon) { overflow: visible; }
